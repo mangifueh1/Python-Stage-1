@@ -12,7 +12,7 @@ class Game:
         self.next_block = self.get_random_block()
         self.game_over = False
         self.score = 0
-        self.game_speed = 500
+        self.game_speed = 200
 
     def update_score(self, lines_cleared, move_down_points):
         if lines_cleared == 1:

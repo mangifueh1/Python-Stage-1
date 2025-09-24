@@ -52,7 +52,7 @@ while True:
             game.reset()
 
         if event.type == GAME_UPDATE and not game.game_over:
-            pygame.time.set_timer(GAME_UPDATE, game.game_speed)
+            # pygame.time.set_timer(GAME_UPDATE, game.game_speed)
             game.move_down()
 
     # Drawing

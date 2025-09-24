@@ -1,5 +1,6 @@
 from math import sqrt
 from random import choice, randint, randrange
+import sys
 import pygame
 
 pygame.init()
@@ -9,8 +10,8 @@ SCREEN = DISPLAY.set_mode((800, 600))
 DISPLAY.set_caption('Space Invaders')
 WINDOW_WIDTH = DISPLAY.get_window_size()[0]
 WINDOW_HEIGHT = DISPLAY.get_window_size()[1]
-ENEMY_SPEED = 0.8
-PLAYER_SPEED = 1.5
+ENEMY_SPEED = 10
+PLAYER_SPEED = 15
 
 
 def iload(src):
@@ -21,7 +22,7 @@ class Enemy:
     def __init__(self, index, state='show',):
         global enemies, enemy_number
 
-        self.IMG = iload('space_invader/enemy.png')
+        self.IMG = iload('completed/space_invader/enemy.png')
         self.width = self.IMG.get_width()
         self.height = self.IMG.get_height()
         self.X = randrange(
@@ -29,7 +30,7 @@ class Enemy:
         self.Y = randrange((int((enemy_number/2))*-self.height),
                            (-self.height), self.height)
         self.velocityX = choice((-ENEMY_SPEED, ENEMY_SPEED))
-        self.velocityY = .27
+        self.velocityY = 1
         self.state = state
         self.index = index
 
@@ -55,13 +56,13 @@ class Bullet:
     def __init__(self, state='ready',):
         global player
 
-        self.IMG = iload('space_invader/bullet.png')
+        self.IMG = iload('completed/space_invader/bullet.png')
         self.width = self.IMG.get_width()
         self.height = self.IMG.get_height()
         self.X = player.X
         self.Y = player.Y
         self.velocityX = 0
-        self.velocityY = -10
+        self.velocityY = -50
         self.state = state
 
     def fire(self, x, y):
@@ -71,7 +72,7 @@ class Bullet:
 
 class Player:
     def __init__(self):
-        self.IMG = iload('space_invader/ship.png')
+        self.IMG = iload('completed/space_invader/ship.png')
         self.width = self.IMG.get_width()
         self.X = (WINDOW_WIDTH / 2) - (self.width / 2)
         self.Y = WINDOW_HEIGHT - 100
@@ -151,14 +152,16 @@ def is_collision(x1, y1, x2, y2):
         return False
 
 
-background = iload('space_invader/background.png')
+background = iload('completed/space_invader/background.png')
 
 
 # Keep program running
-running = True
+# running = True
 splash = True
 
-while running:
+clock = pygame.time.Clock()
+
+while True:
     SCREEN.fill((0, 0, 0))
     if splash:
         pass
@@ -169,8 +172,8 @@ while running:
 
         # For Closing program
         if event.type == pygame.QUIT:
-            splash = False
-            running = False
+            pygame.quit()
+            sys.exit()
 
         # Arrow keys pressed
         if event.type == pygame.KEYDOWN:
@@ -219,3 +222,4 @@ while running:
 
     # Keed updating display
     DISPLAY.update()
+    clock.tick(60)
